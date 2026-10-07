@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: books-23it042
+    runtime: node
+    plan: free
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /health
+    autoDeployTrigger: commit
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGO_READ_URI
+        sync: false
+      - key: MONGO_WRITE_URI
+        sync: false
+      - key: MONGO_SESSION_URI
+        sync: false
+      - key: SESSION_SECRET
+        sync: false

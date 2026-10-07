@@ -1,0 +1,36 @@
+{{#if flash}}<div class="notice {{flash.type}}">{{flash.message}}</div>{{/if}}
+{{#if error}}<div class="notice error">{{error}}</div>{{/if}}
+
+<section class="card">
+  <h2>Thêm sách</h2>
+  <p>Mã sản phẩm phải bắt đầu bằng <strong>{{productPrefix}}</strong>. Giá sau thuế VAT {{vatRate}}% được tính tự động.</p>
+  <form method="post" action="/books">
+    <label>Mã sản phẩm<input name="productCode" required maxlength="64" value="{{form.productCode}}" placeholder="{{productPrefix}}..."></label>
+    <label>Tên sách<input name="title" required maxlength="200" value="{{form.title}}"></label>
+    <label>Tác giả<input name="author" required maxlength="200" value="{{form.author}}"></label>
+    <label>Giá trước thuế (VND)<input name="priceBeforeTax" type="number" min="0" step="0.01" required value="{{form.priceBeforeTax}}"></label>
+    <button type="submit">Thêm sách</button>
+  </form>
+</section>
+
+<section class="card">
+  <div class="section-heading">
+    <h2>Danh sách sách</h2>
+    <span>Lượt xem trong phiên: {{pageViews}}</span>
+  </div>
+  {{#if books.length}}
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Mã</th><th>Tên sách</th><th>Tác giả</th><th>Trước thuế</th><th>Sau thuế</th><th>Ngày tạo</th></tr></thead>
+        <tbody>
+          {{#each books}}
+            <tr>
+              <td><code>{{productCode}}</code></td><td>{{title}}</td><td>{{author}}</td>
+              <td>{{currency priceBeforeTax}}</td><td><strong>{{currency priceAfterTax}}</strong></td><td>{{dateTime createdAt}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  {{else}}<p>Chưa có sách nào.</p>{{/if}}
+</section>
